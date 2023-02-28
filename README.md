@@ -1,3 +1,3 @@
 # Running Calculator
 
-to calculate between min/km and km/h
+to calculate between tempo (min/km) and speed (km/h)
