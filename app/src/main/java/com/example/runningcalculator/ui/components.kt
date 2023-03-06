@@ -24,6 +24,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+
 @Composable
 fun InputField(
     modifier: Modifier = Modifier,
@@ -36,7 +37,7 @@ fun InputField(
 //    leadingIcon: ImageVector
 ) {
     OutlinedTextField(
-        modifier = Modifier.width(100.dp),
+        modifier = Modifier.widthIn(50.dp, 100.dp),
         textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
         value = valueState.value,
         keyboardActions = onAction,
@@ -53,7 +54,7 @@ fun InputField(
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun myButton(
+fun MyButton(
     modifier: Modifier = Modifier, text: String, onClick: () -> Unit
 ) {
     Surface(
@@ -67,6 +68,81 @@ fun myButton(
         )
     }
 }
+
+
+@Composable
+fun RunningDiary() {
+
+    // TODO hoist states !!!!!
+
+    val minState = remember {
+        mutableStateOf("")
+    }
+
+    val secState = remember {
+        mutableStateOf("")
+    }
+
+    val distanceState = remember {
+        mutableStateOf("")
+    }
+
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 50.dp)
+            .padding(top = 12.dp),
+        color = Color.LightGray,
+        shape = CircleShape.copy(CornerSize(12.dp)),
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(
+//                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(
+                    modifier = Modifier.weight(4f),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "Time",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp
+                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        InputField(valueState = minState, label = "min")
+                        Text(
+                            modifier = Modifier.padding(4.dp),
+                            text = ":",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 24.sp
+                        )
+                        InputField(valueState = secState, label = "sec")
+                    }
+                }
+
+                Column(
+                    modifier = Modifier.weight(3f),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "Distance",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp
+                    )
+                    InputField(valueState = distanceState, label = "dist")
+                }
+            }
+            MyButton(text = "ADD TO DIARY") {
+            }
+
+        }
+    }
+}
+
 
 @Composable
 fun SmthngToClick(content: String = "Something to click", onClick: (String) -> Unit) {
@@ -87,6 +163,7 @@ fun SmthngToClick(content: String = "Something to click", onClick: (String) -> U
 fun Calculator() {
     // TODO: clear -> focus off
 
+    // TODO hoist states !!!!!
     val speedState = remember {
         mutableStateOf("")
     }
@@ -130,7 +207,9 @@ fun Calculator() {
                             modifier = Modifier.padding(end = 8.dp)
                         )
                         Text(
-                            text = "Tempo : ", fontWeight = FontWeight.Bold, fontSize = 20.sp
+                            text = "Tempo : ",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 20.sp
                         )
                     }
 
@@ -183,7 +262,7 @@ fun Calculator() {
                     )
                 }
             }
-            myButton(
+            MyButton(
                 text = "CALCULATE", modifier = Modifier.padding(top = 24.dp)
             ) {
                 if (minState.value.isNotEmpty() || secState.value.isNotEmpty()) {
@@ -197,7 +276,7 @@ fun Calculator() {
                 // TODO - remove
                 Log.d("TestTag", "testmsg: CALCULATE")
             }
-            myButton(
+            MyButton(
                 text = "CLEAR", modifier = Modifier.padding(top = 24.dp)
             ) {
                 speedState.value = ""
