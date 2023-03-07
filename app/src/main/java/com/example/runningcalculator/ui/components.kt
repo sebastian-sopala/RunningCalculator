@@ -9,6 +9,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.AddRoad
 import androidx.compose.material.icons.rounded.Speed
 import androidx.compose.material.icons.rounded.Timer
 import androidx.compose.runtime.Composable
@@ -91,12 +92,13 @@ fun RunningDiary() {
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(min = 50.dp)
-            .padding(top = 12.dp),
+            .padding(top = 24.dp),
         color = Color.LightGray,
         shape = CircleShape.copy(CornerSize(12.dp)),
     ) {
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(4.dp)
         ) {
             Row(
 //                verticalAlignment = Alignment.CenterVertically
@@ -105,11 +107,19 @@ fun RunningDiary() {
                     modifier = Modifier.weight(4f),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(
-                        text = "Time",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 20.sp
-                    )
+                    Row() {
+                        Icon(
+                            imageVector = Icons.Rounded.Timer,
+                            contentDescription = "timer icon",
+                            modifier = Modifier.padding(end = 8.dp)
+                        )
+                        Text(
+                            text = "Time",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 20.sp
+                        )
+                    }
+
                     Row(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -128,15 +138,23 @@ fun RunningDiary() {
                     modifier = Modifier.weight(3f),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(
-                        text = "Distance",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 20.sp
-                    )
+                    Row() {
+                        Icon(
+                            imageVector = Icons.Rounded.AddRoad,
+                            contentDescription = "timer icon",
+                            modifier = Modifier.padding(end = 8.dp)
+                        )
+                        Text(
+                            text = "Distance",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 20.sp
+                        )
+                    }
+
                     InputField(valueState = distanceState, label = "dist")
                 }
             }
-            MyButton(text = "ADD TO DIARY") {
+            MyButton(text = "ADD TO DIARY", modifier = Modifier.padding(top=24.dp)) {
             }
 
         }
@@ -262,30 +280,33 @@ fun Calculator() {
                     )
                 }
             }
-            MyButton(
-                text = "CALCULATE", modifier = Modifier.padding(top = 24.dp)
-            ) {
-                if (minState.value.isNotEmpty() || secState.value.isNotEmpty()) {
-                    speedState.value = timeToSpeed(minState, secState)
-                }
-                if (speedState.value.isNotEmpty()) {
-                    minState.value = speedToTime(speedState)[0]
-                    secState.value = speedToTime(speedState)[1]
-                }
+            Row() {
+                MyButton(
+                    text = "CALCULATE", modifier = Modifier.padding(top = 24.dp)
+                ) {
+                    if (minState.value.isNotEmpty() || secState.value.isNotEmpty()) {
+                        speedState.value = timeToSpeed(minState, secState)
+                    }
+                    if (speedState.value.isNotEmpty()) {
+                        minState.value = speedToTime(speedState)[0]
+                        secState.value = speedToTime(speedState)[1]
+                    }
 
-                // TODO - remove
-                Log.d("TestTag", "testmsg: CALCULATE")
-            }
-            MyButton(
-                text = "CLEAR", modifier = Modifier.padding(top = 24.dp)
-            ) {
-                speedState.value = ""
-                minState.value = ""
-                secState.value = ""
+                    // TODO - remove
+                    Log.d("TestTag", "testmsg: CALCULATE")
+                }
+                MyButton(
+                    text = "CLEAR", modifier = Modifier.padding(top = 24.dp)
+                ) {
+                    speedState.value = ""
+                    minState.value = ""
+                    secState.value = ""
 
-                // TODO - remove
-                Log.d("TestTag", "testmsg: CLEAR")
+                    // TODO - remove
+                    Log.d("TestTag", "testmsg: CLEAR")
+                }
             }
+
         }
     }
 }
